@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machaka Burger â Dashboard Ventas 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F5F3EF;color:#1A1A1A;min-height:100vh}
+.hdr{background:#1A1A1A;color:#fff;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.brand-name{font-size:19px;font-weight:900;letter-spacing:-0.5px}.brand-name em{color:#C8383A;font-style:normal}
+.brand-sub{font-size:12px;color:#888;margin-left:12px}
+.hdr-meta{display:flex;gap:8px;align-items:center}
+.hdr-badge{background:#282828;border-radius:5px;padding:4px 10px;font-size:11.5px;color:#999}
+.mock-pill{background:rgba(200,56,58,.15);color:#C8383A;border:1px solid rgba(200,56,58,.4);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:600}
+.loc-bar{background:#111;display:flex;padding:0 32px;border-bottom:1px solid #222}
+.loc-tab{padding:11px 20px;font-size:13px;font-weight:500;color:#555;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.loc-tab:hover{color:#ccc}.loc-tab.active{color:#fff;border-bottom-color:#C8383A}
+.sec-bar{background:#fff;border-bottom:1px solid #EAE5DD;padding:0 32px;display:flex;gap:2px}
+.sec-tab{padding:12px 16px;font-size:12.5px;font-weight:500;color:#7C7068;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.sec-tab:hover{color:#1A1A1A}.sec-tab.active{color:#C8383A;border-bottom-color:#C8383A}
+.main{padding:28px 32px;max-width:1500px}
+.section{display:none}.section.active{display:block}
+.block{margin-bottom:32px}
+.block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.block-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.block-title::before{content:'';display:inline-block;width:4px;height:15px;background:#C8383A;border-radius:2px;flex-shrink:0}
+.block-ctrls{display:flex;gap:8px;align-items:center}
+.ctrl-lbl{font-size:11.5px;color:#7C7068}
+.card{background:#fff;border:1px solid #EAE5DD;border-radius:10px;overflow:hidden}
+.card-pad{padding:20px}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:#fff;border:1px solid #EAE5DD;border-radius:10px;padding:16px 18px}
+.kpi-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#7C7068;margin-bottom:8px}
+.kpi-val{font-size:26px;font-weight:800;line-height:1;margin-bottom:5px}
+.kpi-sub{font-size:11px;color:#7C7068}
+select{border:1px solid #DDD;border-radius:6px;padding:5px 10px;font-size:12px;background:#fff;color:#1A1A1A;cursor:pointer;outline:none}
+select:focus{border-color:#C8383A}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{background:#F7F5F1;padding:8px 11px;text-align:right;font-size:10.5px;font-weight:700;color:#7C7068;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;border-bottom:2px solid #EAE5DD}
+thead th:first-child{text-align:left;min-width:148px}
+tbody td{padding:7px 11px;text-align:right;border-bottom:1px solid #F0ECE6;white-space:nowrap}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+.r-total td{font-weight:700;background:#F7F5F1}
+.r-perc td{color:#7C7068;font-size:11.5px;background:#FDFCFA}
+.r-sep td{background:#EEE9E2;color:#7C7068;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 11px}
+.r-diff td{font-weight:700}
+.r-ppto td{color:#8A8480;font-style:italic;background:#FAFAF8}
+.r-wk-cur td{background:#FFF8E7;font-weight:600}
+.col-r{}.col-c{background:#FFFBEA!important}.col-p{background:#FAFAF8!important}.col-yt{background:#EFF6FF!important;font-weight:700!important}
+.vpos{color:#16A34A!important;font-weight:700}.vneg{color:#DC2626!important;font-weight:700}.vnul{color:#CCC}
+.vih{color:#2563EB;font-weight:600}.vdel{color:#C8383A;font-weight:600}.vta{color:#9333EA;font-weight:600}.vb{font-weight:700}
+.hm0{background:#F5F3EF;color:#9CA3AF}.hm1{background:#DBEAFE;color:#1E3A5F}.hm2{background:#93C5FD;color:#1E3A5F}.hm3{background:#3B82F6;color:#fff}.hm4{background:#1D4ED8;color:#fff;font-weight:700}
+.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#7C7068}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.leg-dash{width:14px;height:0;border-top:3px dashed #94A3B8;flex-shrink:0}
+.tipo-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.tb-i{background:#EDE9FE;color:#7C3AED}.tb-pr{background:#FEF3C7;color:#D97706}.tb-fi{background:#DCFCE7;color:#16A34A}.tb-de{background:#FEE2E2;color:#DC2626}.tb-aq{background:#E0F2FE;color:#0369A1}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mt16{margin-top:16px}.mb14{margin-bottom:14px}
+.tsub{color:#7C7068}.tsml{font-size:11.5px}
+.chart-wrap{padding:16px 20px 8px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div style="display:flex;align-items:baseline">
+    <span class="brand-name">MACHAKA <em>BURGER</em></span>
+    <span class="brand-sub">Dashboard de Ventas â 2026</span>
+  </div>
+  <div class="hdr-meta">
+    <div class="hdr-badge">Datos hasta <strong style="color:#eee">22 Mar 2026</strong></div>
+    <div class="mock-pill">â  Datos mock Â· pendiente BigQuery</div>
+  </div>
+</header>
+
+<div class="loc-bar" id="locBar">
+  <div class="loc-tab active" data-loc="consolidado">â£ Consolidado</div>
+  <div class="loc-tab" data-loc="balmes">Balmes</div>
+  <div class="loc-tab" data-loc="consell">Consell</div>
+  <div class="loc-tab" data-loc="sants">Sants</div>
+</div>
+
+<div class="sec-bar" id="secBar">
+  <div class="sec-tab active" data-sec="ventas">1 Â· Ventas</div>
+  <div class="sec-tab" data-sec="ticket">2 Â· Ticket Medio</div>
+  <div class="sec-tab" data-sec="descuentos">3 Â· Descuentos</div>
+  <div class="sec-tab" data-sec="semanal">4 Â· Ventas Semanales</div>
+</div>
+
+<div class="main">
+
+  <div class="section active" id="sec-ventas">
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">Tabla de Ventas por Canal (sin IVA)</div>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#2563EB"></div>Inhouse</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#C8383A"></div>Delivery</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#9333EA"></div>Take Away</div>
+          <div class="leg-dash"></div><span class="tsub tsml">Presupuesto</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-wrap" id="chartVentas"></div>
+        <div class="tbl-wrap"><table id="tblVentas"></table></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">Ventas Medias por DÃ­a de Semana Ã Mes</div>
+        <div class="block-ctrls">
+          <span class="ctrl-lbl">Canal:</span>
+          <select id="selDowCh">
+            <option value="all">Consolidado</option>
+            <option value="ih">Inhouse</option>
+            <option value="del">Delivery</option>
+          </select>
+        </div>
+      </div>
+      <div class="card"><div class="tbl-wrap"><table id="tblDow"></table></div></div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">FacturaciÃ³n Media por Hora â DistribuciÃ³n por DÃ­a de Semana</div>
+        <div class="block-ctrls">
+          <span class="ctrl-lbl">Mes:</span>
+          <select id="selHrMes"><option value="0">Enero</option><option value="1">Febrero</option><option value="2" selected>Marzo</option></select>
+          <span class="ctrl-lbl">Canal:</span>
+          <select id="selHrCh"><option value="all">Consolidado</option><option value="ih">Inhouse</option><option value="del">Delivery</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap"><table id="tblHourly"></table></div>
+        <div class="card-pad mt16 tsub tsml">* FacturaciÃ³n media estimada por franja horaria. Color indica intensidad relativa al pico del perÃ­odo seleccionado.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-ticket">
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">Ticket Medio y NÃºmero de Tickets</div>
+        <div class="block-ctrls">
+          <span class="ctrl-lbl">Mes:</span>
+          <select id="selTkMes"><option value="0">Enero</option><option value="1">Febrero</option><option value="2" selected>Marzo</option><option value="all">Acumulado Q1</option></select>
+        </div>
+      </div>
+      <div class="kpi-grid" id="kpiTicket"></div>
+      <div class="row2">
+        <div>
+          <div class="block-title mb14">Ticket Medio (â¬) por Canal y Mes</div>
+          <div class="card"><div class="tbl-wrap"><table id="tblTicket"></table></div></div>
+        </div>
+        <div>
+          <div class="block-title mb14">NÃºmero de Tickets por Canal y Mes</div>
+          <div class="card"><div class="tbl-wrap"><table id="tblNTickets"></table></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-descuentos">
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">Descuentos Aplicados por Tipo</div>
+        <div class="block-ctrls">
+          <span class="ctrl-lbl">PerÃ­odo:</span>
+          <select id="selDescPer">
+            <option value="0">Enero 2026</option><option value="1">Febrero 2026</option>
+            <option value="2" selected>Marzo 2026</option><option value="q1">Q1 2026 (EneâMar)</option>
+          </select>
+        </div>
+      </div>
+      <div class="card"><div class="tbl-wrap"><table id="tblDesc"></table></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-semanal">
+    <div class="block">
+      <div class="block-head">
+        <div class="block-title">Ventas Semanales â Real vs Presupuesto</div>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#2563EB"></div>Real</div>
+          <div class="leg-item"><div class="leg-dash"></div>Presupuesto</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-wrap" id="chartSemanal"></div>
+        <div class="tbl-wrap"><table id="tblSemanal"></table></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// âââââââââââââââââââââââââââââââââââââââââââ
+// DATOS MOCK
+// âââââââââââââââââââââââââââââââââââââââââââ
+const MES   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const DIAS  = ['Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b','Dom'];
+const HRS   = ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+const REAL  = 3;   // primeros 3 meses con datos realizados
+const CUR   = 2;   // Ã­ndice mes actual (Marzo)
+
+const D = {
+  balmes:{name:'Balmes',
+    v:{ih_r:[29000,27600,30200,null,null,null,null,null,null,null,null,null],
+       dl_r:[14200,13300,14800,null,null,null,null,null,null,null,null,null],
+       ta_r:[2200, 2200, 2300, null,null,null,null,null,null,null,null,null],
+       ih_p:[29000,29000,30000,30500,31000,32000,29500,28500,31000,32000,30500,33000],
+       dl_p:[14000,14000,14500,15000,15500,16000,14500,14000,15000,15500,14500,16500],
+       ta_p:[2200, 2200, 2300, 2400, 2400, 2500, 2300, 2200, 2400, 2500, 2300, 2600]},
+    dayPct:[10,9,11,12,20,22,16],
+    hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
+    hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
+    tk_ih:[13.4,13.2,13.8],tk_gl:[20.8,21.2,21.5],tk_ub:[23.1,23.4,23.8],tk_sh:[27.5,28.0,28.2],
+    nt_ih:[2164,2091,2188],nt_gl:[421,394,430],nt_ub:[192,178,195],nt_sh:[68,65,70]},
+  consell:{name:'Consell',
+    v:{ih_r:[24000,23000,25200,null,null,null,null,null,null,null,null,null],
+       dl_r:[11900,11400,12400,null,null,null,null,null,null,null,null,null],
+       ta_r:[1900, 1800, 2000, null,null,null,null,null,null,null,null,null],
+       ih_p:[24000,24000,25000,25500,26000,27000,24500,23500,25500,26500,25000,27500],
+       dl_p:[12000,12000,12500,13000,13500,14000,12500,12000,13000,13500,12500,14500],
+       ta_p:[1900, 1900, 2000, 2100, 2100, 2200, 2000, 1900, 2100, 2200, 2000, 2300]},
+    dayPct:[10,9,11,12,20,22,16],
+    hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
+    hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
+    tk_ih:[13.2,13.0,13.5],tk_gl:[20.5,21.0,21.2],tk_ub:[22.8,23.1,23.5],tk_sh:[27.0,27.5,27.8],
+    nt_ih:[1818,1769,1867],nt_gl:[356,330,362],nt_ub:[158,148,163],nt_sh:[55,52,56]},
+  sants:{name:'Sants',
+    v:{ih_r:[20400,19500,21400,null,null,null,null,null,null,null,null,null],
+       dl_r:[9900, 9400,10400, null,null,null,null,null,null,null,null,null],
+       ta_r:[1600, 1600, 1600, null,null,null,null,null,null,null,null,null],
+       ih_p:[20000,20000,21000,21500,22000,23000,20500,19500,21500,22000,21000,23000],
+       dl_p:[10000,10000,10500,11000,11500,12000,10500,10000,11000,11500,10500,12000],
+       ta_p:[1600, 1600, 1700, 1800, 1800, 1900, 1700, 1600, 1800, 1900, 1700, 2000]},
+    dayPct:[11,9,10,12,20,22,16],
+    hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
+    hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
+    tk_ih:[13.0,12.8,13.3],tk_gl:[20.2,20.6,21.0],tk_ub:[22.5,22.8,23.2],tk_sh:[26.5,27.0,27.3],
+    nt_ih:[1569,1523,1609],nt_gl:[295,276,300],nt_ub:[132,124,138],nt_sh:[44,42,46]}
+};
+
+const DESC = {
+  0:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:38,total:268},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'PromociÃ³n',usos:72,total:598},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'FidelizaciÃ³n',usos:128,total:1020},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:198,total:1840},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'AdquisiciÃ³n',usos:62,total:420},
+     {cod:'CUMPLE',desc:'CumpleaÃ±os',tipo:'FidelizaciÃ³n',usos:9,total:108}],
+  1:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:41,total:284},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'PromociÃ³n',usos:80,total:672},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'FidelizaciÃ³n',usos:138,total:1102},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:210,total:1960},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'AdquisiciÃ³n',usos:68,total:458},
+     {cod:'CUMPLE',desc:'CumpleaÃ±os',tipo:'FidelizaciÃ³n',usos:11,total:132}],
+  2:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:45,total:312},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'PromociÃ³n',usos:89,total:748},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'FidelizaciÃ³n',usos:156,total:1241},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:234,total:2180},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'AdquisiciÃ³n',usos:78,total:520},
+     {cod:'CUMPLE',desc:'CumpleaÃ±os',tipo:'FidelizaciÃ³n',usos:12,total:145}]
+};
+
+const SEM = [
+  {lab:'Sem 1',dates:'01â07 Ene',real:32200,pp:31500,ih:20590,del:10010,ta:1600,cur:false},
+  {lab:'Sem 2',dates:'08â14 Ene',real:33400,pp:31500,ih:21380,del:10620,ta:1400,cur:false},
+  {lab:'Sem 3',dates:'15â21 Ene',real:31800,pp:31500,ih:20350,del:10090,ta:1360,cur:false},
+  {lab:'Sem 4',dates:'22â28 Ene',real:32100,pp:31500,ih:20550,del:10180,ta:1370,cur:false},
+  {lab:'Sem 5',dates:'29â31 Ene',real:15300,pp:13500,ih:9790, del:4870, ta:640, cur:false},
+  {lab:'Sem 6',dates:'01â07 Feb',real:30100,pp:30000,ih:19260,del:9550, ta:1290,cur:false},
+  {lab:'Sem 7',dates:'08â14 Feb',real:31400,pp:30000,ih:20100,del:9960, ta:1340,cur:false},
+  {lab:'Sem 8',dates:'15â21 Feb',real:30600,pp:30000,ih:19580,del:9680, ta:1340,cur:false},
+  {lab:'Sem 9',dates:'22â28 Feb',real:29200,pp:30000,ih:18690,del:9260, ta:1250,cur:false},
+  {lab:'Sem 10',dates:'01â07 Mar',real:34300,pp:31500,ih:21950,del:10880,ta:1470,cur:false},
+  {lab:'Sem 11',dates:'08â14 Mar',real:35100,pp:31500,ih:22460,del:11150,ta:1490,cur:false},
+  {lab:'Sem 12',dates:'15â21 Mar',real:34000,pp:31500,ih:21760,del:10780,ta:1460,cur:false},
+  {lab:'Sem 13',dates:'22â28 Mar',real:null, pp:31500,ih:null, del:null, ta:null, cur:true}
+];
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// HELPERS
+// âââââââââââââââââââââââââââââââââââââââââââ
+const fmt  = v => v==null?'â':new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(v)+'â¬';
+const fmt2 = v => v==null?'â':new Intl.NumberFormat('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v)+'â¬';
+const fmtN = v => v==null?'â':new Intl.NumberFormat('es-ES').format(v);
+const fmtP = v => v==null?'â':(v>0?'+':'')+v.toFixed(1)+'%';
+const fmtD = v => v==null?'â':(v>=0?'+':'')+fmt(v);
+const vcls = v => v==null?'vnul':v>0?'vpos':'vneg';
+const sumArr = a => a.reduce((x,y)=>x+(y||0),0);
+
+function getLocData(loc){
+  if(loc!=='consolidado') return D[loc];
+  const ks = ['balmes','consell','sants'];
+  const r = JSON.parse(JSON.stringify(D.balmes));
+  r.name='Consolidado';
+  ['ih_r','dl_r','ta_r','ih_p','dl_p','ta_p'].forEach(k=>{
+    for(let i=0;i<12;i++){
+      const vals=ks.map(l=>D[l].v[k][i]);
+      r.v[k][i]=vals.every(v=>v===null)?null:vals.reduce((a,b)=>a+(b||0),0);
+    }
+  });
+  ['nt_ih','nt_gl','nt_ub','nt_sh'].forEach(k=>{
+    r[k]=[0,1,2].map(i=>ks.reduce((a,l)=>a+D[l][k][i],0));
+  });
+  ['tk_ih','tk_gl','tk_ub','tk_sh'].forEach(tk=>{
+    const nk=tk.replace('tk_','nt_');
+    r[tk]=[0,1,2].map(i=>{
+      const rev=ks.reduce((a,l)=>a+D[l][tk][i]*D[l][nk][i],0);
+      const cnt=ks.reduce((a,l)=>a+D[l][nk][i],0);
+      return cnt>0?rev/cnt:0;
+    });
+  });
+  r.dayPct=DIAS.map((_,di)=>{
+    const wt=ks.reduce((a,l)=>a+D[l].dayPct[di]*sumArr(D[l].v.ih_r.filter(v=>v!==null)),0);
+    const tot=ks.reduce((a,l)=>a+sumArr(D[l].v.ih_r.filter(v=>v!==null)),0);
+    return wt/tot;
+  });
+  r.hrWD=D.balmes.hrWD; r.hrWE=D.balmes.hrWE;
+  return r;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// SVG CHART â VENTAS MENSUAL
+// âââââââââââââââââââââââââââââââââââââââââââ
+function genSVGVentas(loc){
+  const d=getLocData(loc); const V=d.v;
+  const W=940,H=200,ML=58,MR=12,MT=14,MB=28;
+  const PW=W-ML-MR, PH=H-MT-MB;
+  const SLOT=PW/12, BW=SLOT*0.55;
+  const bx=i=>ML+i*SLOT+(SLOT-BW)/2;
+  const totP=MES.map((_,i)=>(V.ih_p[i]||0)+(V.dl_p[i]||0)+(V.ta_p[i]||0));
+  const maxV=Math.max(...totP)*1.12;
+  const ys=v=>MT+PH-(v/maxV)*PH;
+  const yFmt=v=>v>=1000?(v/1000).toFixed(0)+'k':v;
+
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">`;
+  // grid
+  [0.25,0.5,0.75,1].forEach(p=>{
+    const v=maxV*p, y=ys(v);
+    s+=`<line x1="${ML}" y1="${y}" x2="${W-MR}" y2="${y}" stroke="#F0ECE6" stroke-width="1"/>`;
+    s+=`<text x="${ML-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#9CA3AF">${yFmt(Math.round(v))}â¬</text>`;
+  });
+  // bars
+  MES.forEach((m,i)=>{
+    const x=bx(i);
+    if(i<REAL){
+      const ih=V.ih_r[i]||0, dl=V.dl_r[i]||0, ta=V.ta_r[i]||0;
+      let yb=MT+PH;
+      const ihH=(ih/maxV)*PH; s+=`<rect x="${x}" y="${yb-ihH}" width="${BW}" height="${ihH}" fill="#2563EB" rx="1"/>`;yb-=ihH;
+      const dlH=(dl/maxV)*PH; s+=`<rect x="${x}" y="${yb-dlH}" width="${BW}" height="${dlH}" fill="#C8383A" rx="1"/>`;yb-=dlH;
+      const taH=(ta/maxV)*PH; s+=`<rect x="${x}" y="${yb-taH}" width="${BW}" height="${taH}" fill="#9333EA" rx="1"/>`;
+    } else {
+      const tot=totP[i], bH=(tot/maxV)*PH; s+=`<rect x="${x}" y="${MT+PH-bH}" width="${BW}" height="${bH}" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="3,2" rx="1"/>`;
+    }
+    const lx=bx(i)+BW/2, tc=i===CUR?'#C8383A':'#9CA3AF', fw=i===CUR?'bold':'normal';
+    s+=`<text x="${lx}" y="${H-4}" text-anchor="middle" font-size="10" fill="${tc}" font-weight="${fw}">${m}${i===CUR?'*':''}</text>`;
+  });
+  // budget line
+  const pts=MES.map((_,i)=>`${bx(i)+BW/2},${ys(totP[i])}`).join(' ');
+  s+=`<polyline points="${pts}" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="6,4"/>`;
+  MES.forEach((_,i)=>{ s+=`<circle cx="${bx(i)+BW/2}" cy="${ys(totP[i])}" r="2.5" fill="#94A3B8"/>`; });
+  s+=`</svg>`;
+  return s;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// SVG CHART â SEMANAL
+// âââââââââââââââââââââââââââââââââââââââââââ
+function genSVGSemanal(){
+  const W=940,H=180,ML=58,MR=12,MT=14,MB=28;
+  const PW=W-ML-MR, PH=H-MT-MB;
+  const n=SEM.length, SLOT=PW/n, BW=SLOT*0.55;
+  const bx=i=>ML+i*SLOT+(SLOT-BW)/2;
+  const allPP=SEM.map(s=>s.pp), allR=SEM.filter(s=>s.real).map(s=>s.real);
+  const maxV=Math.max(...allPP,...allR)*1.1;
+  const ys=v=>MT+PH-(v/maxV)*PH;
+
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">`;
+  [0.25,0.5,0.75,1].forEach(p=>{
+    const v=maxV*p, y=ys(v);
+    s+=`<line x1="${ML}" y1="${y}" x2="${W-MR}" y2="${y}" stroke="#F0ECE6" stroke-width="1"/>`;
+    s+=`<text x="${ML-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#9CA3AF">${Math.round(v/1000)}kâ¬</text>`;
+  });
+  SEM.forEach((sm,i)=>{
+    const x=bx(i);
+    if(sm.real!=null){
+      const bH=(sm.real/maxV)*PH;
+      const fc=sm.cur?'rgba(37,99,235,.5)':'rgba(37,99,235,.8)';
+      s+=`<rect x="${x}" y="${MT+PH-bH}" width="${BW}" height="${bH}" fill="${fc}" rx="1"/>`;
+    }
+    const lx=bx(i)+BW/2, tc=sm.cur?'#C8383A':'#9CA3AF';
+    s+=`<text x="${lx}" y="${H-4}" text-anchor="middle" font-size="8.5" fill="${tc}">${sm.lab}</text>`;
+  });
+  const pts=SEM.map((sm,i)=>`${bx(i)+BW/2},${ys(sm.pp)}`).join(' ');
+  s+=`<polyline points="${pts}" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="6,4"/>`;
+  SEM.forEach((sm,i)=>{ s+=`<circle cx="${bx(i)+BW/2}" cy="${ys(sm.pp)}" r="2.5" fill="#94A3B8"/>`; });
+  s+=`</svg>`;
+  return s;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// TABLA VENTAS
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderVentas(loc){
+  document.getElementById('chartVentas').innerHTML=genSVGVentas(loc);
+  const d=getLocData(loc), V=d.v;
+  let h=`<thead><tr><th></th>`;
+  MES.forEach((m,i)=>{const c=i<REAL?(i===CUR?'col-c':''):' col-p';h+=`<th class="${c}">${m}${i===CUR?'*':i>=REAL?' P':''}</th>`;});
+  h+=`<th class="col-yt">Total R</th></tr></thead><tbody>`;
+
+  // realizados
+  [['ih_r','Inhouse','vih'],['dl_r','Delivery','vdel'],['ta_r','Take Away','vta']].forEach(([k,lbl,cs])=>{
+    const ytd=sumArr(V[k].filter(x=>x!==null));
+    h+=`<tr><td class="${cs}">${lbl}</td>`;
+    MES.forEach((_,i)=>{const c=i<REAL?(i===CUR?'col-c':''):' col-p';h+=`<td class="${c} ${V[k][i]==null?'vnul':''}">${fmt(V[k][i])}</td>`;});
+    h+=`<td class="col-yt">${fmt(ytd)}</td></tr>`;
+  });
+  // total realizado
+  let ytdAct=0;
+  h+=`<tr class="r-total"><td>TOTAL Realizado</td>`;
+  MES.forEach((_,i)=>{
+    const c=i<REAL?(i===CUR?'col-c':''):' col-p';
+    const t=i<REAL?((V.ih_r[i]||0)+(V.dl_r[i]||0)+(V.ta_r[i]||0)):null;
+    if(i<REAL)ytdAct+=t;
+    h+=`<td class="${c} ${t==null?'vnul':'vb'}">${fmt(t)}</td>`;
+  });
+  h+=`<td class="col-yt vb">${fmt(ytdAct)}</td></tr>`;
+  // % participaciÃ³n
+  [['ih_r','% Inhouse'],['dl_r','% Delivery'],['ta_r','% Take Away']].forEach(([k,lbl])=>{
+    h+=`<tr class="r-perc"><td>${lbl}</td>`;
+    MES.forEach((_,i)=>{
+      const c=i<REAL?(i===CUR?'col-c':''):' col-p';
+      if(i<REAL){const tot=(V.ih_r[i]||0)+(V.dl_r[i]||0)+(V.ta_r[i]||0);h+=`<td class="${c}">${tot>0?((V[k][i]||0)/tot*100).toFixed(1)+'%':'â'}</td>`;}
+      else h+=`<td class="col-p vnul">â</td>`;
+    });
+    h+=`<td class="col-yt">â</td></tr>`;
+  });
+  // separator + presupuesto
+  h+=`<tr class="r-sep"><td colspan="${MES.length+2}">Presupuesto</td></tr>`;
+  [['ih_p','Inhouse P','vih'],['dl_p','Delivery P','vdel'],['ta_p','Take Away P','vta']].forEach(([k,lbl,cs])=>{
+    const ytdP=sumArr(V[k].slice(0,REAL));
+    h+=`<tr class="r-ppto"><td class="${cs}">${lbl}</td>`;
+    MES.forEach((_,i)=>{const c=i<REAL?(i===CUR?'col-c':''):' col-p';h+=`<td class="${c}">${fmt(V[k][i])}</td>`;});
+    h+=`<td class="col-yt">${fmt(ytdP)}</td></tr>`;
+  });
+  let ytdPtot=0;
+  h+=`<tr class="r-total r-ppto"><td>TOTAL Presupuesto</td>`;
+  MES.forEach((_,i)=>{
+    const c=i<REAL?(i===CUR?'col-c':''):' col-p';
+    const t=(V.ih_p[i]||0)+(V.dl_p[i]||0)+(V.ta_p[i]||0);
+    if(i<REAL)ytdPtot+=t;
+    h+=`<td class="${c}">${fmt(t)}</td>`;
+  });
+  h+=`<td class="col-yt">${fmt(ytdPtot)}</td></tr>`;
+  // diferencia
+  h+=`<tr class="r-sep"><td colspan="${MES.length+2}">Diferencia Real vs Presupuesto</td></tr>`;
+  let ytdDiff=0;
+  h+=`<tr class="r-diff"><td>Dif. (â¬)</td>`;
+  MES.forEach((_,i)=>{
+    if(i<REAL){const r=(V.ih_r[i]||0)+(V.dl_r[i]||0)+(V.ta_r[i]||0);const p=(V.ih_p[i]||0)+(V.dl_p[i]||0)+(V.ta_p[i]||0);const df=r-p;ytdDiff+=df;const c=i===CUR?'col-c':'';h+=`<td class="${c} ${vcls(df)}">${fmtD(df)}</td>`;}
+    else h+=`<td class="col-p vnul">â</td>`;
+  });
+  h+=`<td class="col-yt ${vcls(ytdDiff)}">${fmtD(ytdDiff)}</td></tr>`;
+  h+=`<tr class="r-diff r-perc"><td>Dif. (%)</td>`;
+  MES.forEach((_,i)=>{
+    if(i<REAL){const r=(V.ih_r[i]||0)+(V.dl_r[i]||0)+(V.ta_r[i]||0);const p=(V.ih_p[i]||0)+(V.dl_p[i]||0)+(V.ta_p[i]||0);const pct=p>0?(r-p)/p*100:0;const c=i===CUR?'col-c':'';h+=`<td class="${c} ${vcls(pct)}">${fmtP(pct)}</td>`;}
+    else h+=`<td class="col-p vnul">â</td>`;
+  });
+  h+=`<td class="col-yt vnul">â</td></tr></tbody>`;
+  document.getElementById('tblVentas').innerHTML=h;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// TABLA DÃA SEMANA
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderDow(loc,ch){
+  const d=getLocData(loc); const W=4.35;
+  function dayAvg(mi,di,ch){
+    let tot;
+    const src=mi<REAL?d.v:null;
+    if(mi<REAL){if(ch==='all')tot=(d.v.ih_r[mi]||0)+(d.v.dl_r[mi]||0)+(d.v.ta_r[mi]||0);else if(ch==='ih')tot=d.v.ih_r[mi]||0;else tot=d.v.dl_r[mi]||0;}
+    else{if(ch==='all')tot=(d.v.ih_p[mi]||0)+(d.v.dl_p[mi]||0)+(d.v.ta_p[mi]||0);else if(ch==='ih')tot=d.v.ih_p[mi]||0;else tot=d.v.dl_p[mi]||0;}
+    return (tot/W)*(d.dayPct[di]/100);
+  }
+  let h=`<thead><tr><th>DÃ­a / Mes</th>`;
+  MES.forEach((m,i)=>{const c=i<REAL?(i===CUR?' col-c':''):' col-p';h+=`<th class="${c}">${m}${i===CUR?'*':''}</th>`;});
+  h+=`</tr></thead><tbody>`;
+  DIAS.forEach((dia,di)=>{
+    h+=`<tr><td>${dia}</td>`;
+    MES.forEach((_,mi)=>{const c=mi<REAL?(mi===CUR?' col-c':''):' col-p';h+=`<td class="${c}">${fmt(Math.round(dayAvg(mi,di,ch)))}</td>`;});
+    h+=`</tr><tr class="r-perc"><td style="padding-left:20px">% semana</td>`;
+    MES.forEach((_,mi)=>{const c=mi<REAL?(mi===CUR?' col-c':''):' col-p';h+=`<td class="${c}">${d.dayPct[di].toFixed(0)}%</td>`;});
+    h+=`</tr>`;
+  });
+  h+=`<tr class="r-total"><td>Media semanal</td>`;
+  MES.forEach((_,mi)=>{
+    const c=mi<REAL?(mi===CUR?' col-c':''):' col-p';
+    let tot;
+    if(mi<REAL){if(ch==='all')tot=(d.v.ih_r[mi]||0)+(d.v.dl_r[mi]||0)+(d.v.ta_r[mi]||0);else if(ch==='ih')tot=d.v.ih_r[mi]||0;else tot=d.v.dl_r[mi]||0;}
+    else{if(ch==='all')tot=(d.v.ih_p[mi]||0)+(d.v.dl_p[mi]||0)+(d.v.ta_p[mi]||0);else if(ch==='ih')tot=d.v.ih_p[mi]||0;else tot=d.v.dl_p[mi]||0;}
+    h+=`<td class="${c}">${fmt(Math.round(tot/W))}</td>`;
+  });
+  h+=`</tr></tbody>`;
+  document.getElementById('tblDow').innerHTML=h;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// TABLA HORA Ã DÃA (HEATMAP)
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderHourly(loc,mi,ch){
+  const d=getLocData(loc); const W=4.35; const WE=[4,5,6];
+  function dailyForDay(di,ch){
+    let tot;
+    if(mi<REAL){if(ch==='all')tot=(d.v.ih_r[mi]||0)+(d.v.dl_r[mi]||0)+(d.v.ta_r[mi]||0);else if(ch==='ih')tot=d.v.ih_r[mi]||0;else tot=d.v.dl_r[mi]||0;}
+    else{if(ch==='all')tot=(d.v.ih_p[mi]||0)+(d.v.dl_p[mi]||0)+(d.v.ta_p[mi]||0);else if(ch==='ih')tot=d.v.ih_p[mi]||0;else tot=d.v.dl_p[mi]||0;}
+    return (tot/W)*(d.dayPct[di]/100);
+  }
+  const matrix=HRS.map((_,hi)=>DIAS.map((_,di)=>{const p=WE.includes(di)?d.hrWE:d.hrWD;return dailyForDay(di,ch)*(p[hi]/100);}));
+  const flat=matrix.flat().filter(v=>v>0).sort((a,b)=>a-b);
+  const q=(p)=>flat[Math.floor(flat.length*p)]||0;
+  const [p20,p50,p75,p90]=[q(.2),q(.5),q(.75),q(.9)];
+  function hm(v){if(v<=0)return 'hm0';if(v<p20)return 'hm0';if(v<p50)return 'hm1';if(v<p75)return 'hm2';if(v<p90)return 'hm3';return 'hm4';}
+  let h=`<thead><tr><th>Hora</th>${DIAS.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>`;
+  HRS.forEach((hr,hi)=>{
+    h+=`<tr><td style="font-weight:600;color:#7C7068;background:#FAFAF8">${hr}</td>`;
+    DIAS.forEach((_,di)=>{const v=matrix[hi][di];h+=`<td class="${hm(v)}" style="text-align:center;font-size:11px">${v>1?fmt(Math.round(v)):''}</td>`;});
+    h+=`</tr>`;
+  });
+  h+=`</tbody>`;
+  document.getElementById('tblHourly').innerHTML=h;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// TICKET SECTION
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderTicket(loc,sel){
+  const d=getLocData(loc); const isAll=sel==='all';
+  const mi=isAll?null:parseInt(sel);
+  const avg=arr=>isAll?arr.reduce((a,b)=>a+b,0)/arr.length:arr[mi];
+  const smN=arr=>isAll?sumArr(arr):arr[mi];
+  const ntIh=smN(d.nt_ih),ntGl=smN(d.nt_gl),ntUb=smN(d.nt_ub),ntSh=smN(d.nt_sh);
+  const ntDel=ntGl+ntUb+ntSh, ntTot=ntIh+ntDel;
+  const tkIh=avg(d.tk_ih);
+  const tkDel=isAll
+    ?(sumArr(d.nt_gl.map((n,i)=>n*d.tk_gl[i]))+sumArr(d.nt_ub.map((n,i)=>n*d.tk_ub[i]))+sumArr(d.nt_sh.map((n,i)=>n*d.tk_sh[i])))/(sumArr(d.nt_gl)+sumArr(d.nt_ub)+sumArr(d.nt_sh))
+    :(d.nt_gl[mi]*d.tk_gl[mi]+d.nt_ub[mi]*d.tk_ub[mi]+d.nt_sh[mi]*d.tk_sh[mi])/(d.nt_gl[mi]+d.nt_ub[mi]+d.nt_sh[mi]);
+  const tkTot=(tkIh*ntIh+tkDel*ntDel)/ntTot;
+
+  document.getElementById('kpiTicket').innerHTML=[
+    {lbl:'Ticket Medio Total',val:fmt2(tkTot),sub:'todos los canales'},
+    {lbl:'Ticket Inhouse',val:fmt2(tkIh),sub:'in-house'},
+    {lbl:'Ticket Delivery',val:fmt2(tkDel),sub:'Glovo + Uber + Shop'},
+    {lbl:'NÂº Tickets Total',val:fmtN(ntTot),sub:'comandas totales'},
+    {lbl:'NÂº Tickets Inhouse',val:fmtN(ntIh),sub:`${(ntIh/ntTot*100).toFixed(0)}% del total`},
+    {lbl:'NÂº Tickets Delivery',val:fmtN(ntDel),sub:`${(ntDel/ntTot*100).toFixed(0)}% del total`},
+  ].map(k=>`<div class="kpi-card"><div class="kpi-lbl">${k.lbl}</div><div class="kpi-val">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('');
+
+  // ticket medio table
+  let h=`<thead><tr><th>Canal</th>${[0,1,2].map(i=>`<th class="${i===CUR?'col-c':''}">${MES[i]}${i===CUR?'*':''}</th>`).join('')}</tr></thead><tbody>`;
+  [['tk_ih','nt_ih','Inhouse','vih'],['tk_gl','nt_gl','Glovo','vdel'],['tk_ub','nt_ub','Uber','vdel'],['tk_sh','nt_sh','Shop','vdel']].forEach(([tk,nk,lbl,cs])=>{
+    h+=`<tr><td class="${cs}">${lbl}</td>${[0,1,2].map(i=>`<td class="${i===CUR?'col-c':''}">${fmt2(d[tk][i])}</td>`).join('')}</tr>`;
+  });
+  h+=`<tr class="r-total"><td>Delivery total</td>${[0,1,2].map(i=>{const t=(d.nt_gl[i]*d.tk_gl[i]+d.nt_ub[i]*d.tk_ub[i]+d.nt_sh[i]*d.tk_sh[i])/(d.nt_gl[i]+d.nt_ub[i]+d.nt_sh[i]);return`<td class="${i===CUR?'col-c':''}">${fmt2(t)}</td>`;}).join('')}</tr>`;
+  h+=`<tr class="r-total"><td>Total general</td>${[0,1,2].map(i=>{const ntT=d.nt_ih[i]+d.nt_gl[i]+d.nt_ub[i]+d.nt_sh[i];const t=(d.nt_ih[i]*d.tk_ih[i]+d.nt_gl[i]*d.tk_gl[i]+d.nt_ub[i]*d.tk_ub[i]+d.nt_sh[i]*d.tk_sh[i])/ntT;return`<td class="${i===CUR?'col-c':''}  vb">${fmt2(t)}</td>`;}).join('')}</tr></tbody>`;
+  document.getElementById('tblTicket').innerHTML=h;
+
+  // nÂº tickets table
+  let h2=`<thead><tr><th>Canal</th>${[0,1,2].map(i=>`<th class="${i===CUR?'col-c':''}">${MES[i]}${i===CUR?'*':''}</th>`).join('')}</tr></thead><tbody>`;
+  [['nt_ih','Inhouse','vih'],['nt_gl','Glovo','vdel'],['nt_ub','Uber','vdel'],['nt_sh','Shop','vdel']].forEach(([k,lbl,cs])=>{
+    h2+=`<tr><td class="${cs}">${lbl}</td>${[0,1,2].map(i=>`<td class="${i===CUR?'col-c':''}">${fmtN(d[k][i])}</td>`).join('')}</tr>`;
+  });
+  h2+=`<tr class="r-total"><td>Delivery total</td>${[0,1,2].map(i=>`<td class="${i===CUR?'col-c':''}">${fmtN(d.nt_gl[i]+d.nt_ub[i]+d.nt_sh[i])}</td>`).join('')}</tr>`;
+  h2+=`<tr class="r-total"><td>Total general</td>${[0,1,2].map(i=>`<td class="${i===CUR?'col-c':''} vb">${fmtN(d.nt_ih[i]+d.nt_gl[i]+d.nt_ub[i]+d.nt_sh[i])}</td>`).join('')}</tr></tbody>`;
+  document.getElementById('tblNTickets').innerHTML=h2;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// DESCUENTOS
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderDesc(per){
+  let rows=per==='q1'
+    ?Object.values([0,1,2].flatMap(m=>DESC[m]).reduce((a,r)=>{if(!a[r.cod])a[r.cod]={...r,usos:0,total:0};a[r.cod].usos+=r.usos;\r[cod].total+=r.total;return a},{}))
+    :DESC[parseInt(per)];
+  const tipMap={'Interno':'tb-i','PromociÃ³n':'tb-pr','FidelizaciÃ³n':'tb-fi','Delivery':'tb-de','AdquisiciÃ³n':'tb-aq'};
+  const totV=per==='q1'?420000:140000, totD=rows.reduce((a,r)=>a+r.total,0), totU=rows.reduce((a,r)=>a+r.usos,0);
+  let h=`<thead><tr>
+    <th style="text-align:left">CÃ³digo</th><th style="text-align:left">DescripciÃ³n</th><th style="text-align:left">Tipo</th>
+    <th>NÂº ¾{os}</th><th>% Usos</th><th>Total â¬</th><th>% s/ Ventas</th><th>Desc. medio</th>
+  </tr></thead><tbody>`;
+  rows.sort((a,b)=>b.total-a.total).forEach(r=>{
+    h+=`<tr>
+      <td style="font-family:monospace;font-size:11px;color:#7C7068">${r.cod}</td>
+      <td>${r.desc}</td>
+      <td><span class="tipo-badge ${tipMap[r.tipo]||'tb-aq'}">${r.tipo}</span></td>
+      <td>${fmtN(r.usos)}</td><td>${(r.usos/totU*100).toFixed(1)}%</td>
+      <td>${fmt(r.total)}</td><td>${(r.total/totV*100).toFixed(2)}%</td>
+      <td>$y(r.total/r.usos).toFixed(2)}â¬</td>
+    </tr>`;
+  });
+  h+=`<tr class="r-total"><td colspan="3">TOTAL</td><td>${fmtN(totU)}</td><td>100%</td><td>${fmt(totD)}</td><td>${(totD/totV*100).toFixed(2)}%</td><td>${(totD/totU).toFixed(2)}â¬</td></tr></tbody>`;
+  document.getElementById('tblDesc').innerHTML=h;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// SEMANAL
+// âââââââââââââââââââââââââââââââââââââââââââ
+function renderSemanal(){
+  document.getElementById('chartSemanal').innerHTML=genSVGSemanal();
+  let totR=0,totP=0,totIh=0,totDel=0,totTa=0;
+  let h=`<thead><tr>
+    <th style="text-align:left">Semana</th><th style="text-align:left">Fechas</th>
+    <th>Real (â¬)</th><th>Ppto (â¬)</th><th>Dif. â¬</th><th>Dif. %</th>
+    <th>Inhouse</th><th>Delivery</th><th>Take Away</th>
+  </tr></thead><tbody>`;
+  SEM.forEach(s=>{
+    const df=s.real!=null?s.real-s.pp:null, dp=s.real!=null&&s.pp>0?(s.real-s.pp)/s.pp*100:null;
+    if(s.real!=null){totR+=s.real;totIh+=s.ih||0;totDel+=s.del||0;totTa+=s.ta||0;} totP+=s.pp;
+    h+=`<tr class="${s.cur?'r-wk-cur':''}">
+      <td><strong>${s.lab}</strong>${s.cur?' ð':''}</td><td class="tsub">${s.dates}</td>
+      <td class="vb">${fmt(s.real)}</td><td class="tsub">${fmt(s.pp)}</td>
+      <td class="${vcls(df)}">${df!=null?fmtD(df):'â'}</td>
+      <td class="${vcls(dp)}">${dp!=null?fmtP(dp):'â'}</td>
+      <td class="vih">${fmt(s.ih)}</td><td class="vdel">${fmt(s.del)}</td><td class="vta">${fmt(s.ta)}</td>
+    </tr>`;
+  });
+  const cd=totR-totP, cp=totP>0?cd/totP*100:0;
+  h+=`<tr class="r-total"><td colspan="2">ACUMULADO YTD</td><td class="vb">${fmt(totR)}</td><td>${fmt(totP)}</td><td class="${vcls(cd)}">${fmtD(cd)}</td><td class="${vcls(cp)}">${fmtP(cp)}</td><td class="vih">${fmt(totIh)}</td><td class="vdel">${fmt(totDel)}</td><td class="vta">${fmt(totTa)}</td></tr></tbody>`;
+  document.getElementById('tblSemanal').innerHTML=h;
+}
+
+// âââââââââââââââââââââââââââââââââââââââââââ
+// ORCHESTRATOR + EVENTS
+// âââââââââââââââââââââââââââââââââââââââââââ
+let curLoc='consolidado';
+
+function renderAll(){
+  renderVentas(curLoc);
+  renderDow(curLoc,document.getElementById('selDowCh').value);
+  renderHourly(curLoc,parseInt(document.getElementById('selHrMes').value),document.getElementById('selHrCh').value);
+  renderTicket(curLoc,document.getElementById('selTkMes').value);
+  renderDesc(document.getElementById('selDescPer').value);
+  renderSemanal();
+}
+
+document.getElementById('locBar').addEventListener('click',e=>{
+  const t=e.target.closest('[data-loc]'); if(!t)return;
+  document.querySelectorAll('.loc-tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  curLoc=t.dataset.loc; renderAll();
+});
+document.getElementById('secBar').addEventListener('click',e=>{
+  const t=e.target.closest('[data-sec]'); if(!t)return;
+  document.querySelectorAll('.sec-tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.getElementById('sec-'+t.dataset.sec).classList.add('active');
+});
+document.getElementById('selDowCh').addEventListener('change',()=>renderDow(curLoc,document.getElementById('selDowCh').value));
+document.getElementById('selHrMes').addEventListener('change',()=>renderHourly(curLoc,parseInt(document.getElementById('selHrMes').value),document.getElementById('selHrCh').value));
+document.getElementById('selHrCh').addEventListener('change',()=>renderHourly(curLoc,parseInt(document.getElementById('selHrMes').value),document.getElementById('selHrCh').value));
+document.getElementById('selTkMes').addEventListener('change',()=>renderTicket(curLoc,document.getElementById('selTkMes').value));
+document.getElementById('selDescPer').addEventListener('change',()=>renderDesc(document.getElementById('selDescPer').value));
+
+renderAll();
+</script>
+</body>
+</html>
