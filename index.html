@@ -541,7 +541,7 @@ function renderVentas(loc){
   h+=`<th class="col-yt">Total R</th></tr></thead><tbody>`;
 
   // Canal rows con % inline
-  [['ih_r','ih_p','Inhouse','vih'],['dl_r','dl_p','Delivery','vdel'],['ta_r','ta_p','Take Away',"vta']].forEach(([kr,kp,lbl,cs])=>{
+  [['ih_r','ih_p','Inhouse','vih'],['dl_r','dl_p','Delivery','vdel'],['ta_r','ta_p','Take Away','vta']].forEach(([kr,kp,lbl,cs])=>{
     const ytd=sumArr(V[kr].filter(x=>x!==null));
     const ytdAll=sumArr(V.ih_r.filter(x=>x!==null))+sumArr(V.dl_r.filter(x=>x!==null))+sumArr(V.ta_r.filter(x=>x!==null));
     const ytdPct=ytdAll>0?ytd/ytdAll*100:0;
