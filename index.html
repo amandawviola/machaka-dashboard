@@ -712,7 +712,7 @@ function renderTicket(loc,sel){
   const mi=isAll?null:parseInt(sel);
   const avg=arr=>isAll?arr.reduce((a,b)=>a+b,0)/arr.length:arr[mi];
   const smN=arr=>isAll?sumArr(arr):arr[mi];
-  const ntIh=smN(d.nt_ih),ntGl?smN(d.nt_gl),ntUb=smN(d.nt_ub),ntSh=smN(d.nt_sh);
+  const ntIh=smN(d.nt_ih),ntGl=smN(d.nt_gl),ntUb=smN(d.nt_ub),ntSh=smN(d.nt_sh);
   const ntDel=ntGl+ntUb+ntSh, ntTot=ntIh+ntDel;
   const tkIh=avg(d.tk_ih);
   const tkDel=isAll
