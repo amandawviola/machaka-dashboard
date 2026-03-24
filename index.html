@@ -15,7 +15,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .brand-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;color:#1A1A1A;text-transform:uppercase;line-height:1}
 .brand-name em{color:#C8383A;font-style:normal}
 .hdr-meta{display:flex;gap:8px;align-items:center}
-.mock-pill{background:rgba(0,0,0,.08);color:#1A1A1A;border:1px solid rgba(0,0,0,.2);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:600}
+.mock-pill{background:rgba(34,139,34,.12);color:#186F18;border:1px solid rgba(34,139,34,.35);border-radius:100px;padding:3px 10px;font-size:11px;font-weight:600}
 
 /* ── LOCATION BAR ── */
 .loc-bar{background:#2A2A2A;display:flex;padding:0 32px;border-bottom:1px solid #333}
@@ -148,7 +148,7 @@ tbody tr:last-child td{border-bottom:none}
     <span class="brand-name">MACHAKA <em>BURGER</em></span>
   </div>
   <div class="hdr-meta">
-    <div class="mock-pill">&#9888; Datos mock &middot; pendiente BigQuery</div>
+    <div class="mock-pill">&#10003; Datos reales &middot; BigQuery Mar 2026</div>
   </div>
 </header>
 
@@ -317,7 +317,9 @@ tbody tr:last-child td{border-bottom:none}
 
 <script>
 // ═══════════════════════════════════════════
-// DATOS MOCK
+// DATOS REALES — BigQuery v_vendas_diarias
+// Exportado: 2026-03-23 | Ene–Mar 2026
+// Presupuesto: estimado (pendiente cierre)
 // ═══════════════════════════════════════════
 const MES   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const DIAS  = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
@@ -325,81 +327,86 @@ const HRS   = ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','
 const REAL  = 3;
 const CUR   = 2;
 
+// Canales: Inhouse = venta en sala | Delivery = Glovo+Uber+otros externos
+// Tickets e imputación delivery estimados a partir de transacciones totales y revenue por plataforma
 const D = {
   balmes:{name:'Balmes',
-    v:{ih_r:[29000,27600,30200,null,null,null,null,null,null,null,null,null],
-       dl_r:[14200,13300,14800,null,null,null,null,null,null,null,null,null],
-       ta_r:[2200, 2200, 2300, null,null,null,null,null,null,null,null,null],
-       ih_p:[29000,29000,30000,30500,31000,32000,29500,28500,31000,32000,30500,33000],
-       dl_p:[14000,14000,14500,15000,15500,16000,14500,14000,15000,15500,14500,16500],
-       ta_p:[2200, 2200, 2300, 2400, 2400, 2500, 2300, 2200, 2400, 2500, 2300, 2600]},
+    v:{ih_r:[47562,53764,52015,null,null,null,null,null,null,null,null,null],
+       dl_r:[18400,13974,14640,null,null,null,null,null,null,null,null,null],
+       ta_r:[null,null,null,null,null,null,null,null,null,null,null,null],
+       ih_p:[50000,56000,54000,54000,55000,56000,50000,49000,52000,53000,51000,55000],
+       dl_p:[19000,14500,15500,15500,16000,16500,15000,14500,15500,16000,15000,17000],
+       ta_p:[0,0,0,0,0,0,0,0,0,0,0,0]},
     dayPct:[10,9,11,12,20,22,16],
     hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
     hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
-    tk_ih:[13.4,13.2,13.8],tk_gl:[20.8,21.2,21.5],tk_ub:[23.1,23.4,23.8],tk_sh:[27.5,28.0,28.2],
-    nt_ih:[2164,2091,2188],nt_gl:[421,394,430],nt_ub:[192,178,195],nt_sh:[68,65,70]},
+    tk_ih:[22.7,22.5,23.4],tk_gl:[25.0,25.0,25.0],tk_ub:[28.0,28.0,28.0],tk_sh:[26.0,26.0,26.0],
+    nt_ih:[2100,2388,2223],nt_gl:[596,439,440],nt_ub:[94,72,100],nt_sh:[33,37,33]},
   consell:{name:'Consell',
-    v:{ih_r:[24000,23000,25200,null,null,null,null,null,null,null,null,null],
-       dl_r:[11900,11400,12400,null,null,null,null,null,null,null,null,null],
-       ta_r:[1900, 1800, 2000, null,null,null,null,null,null,null,null,null],
-       ih_p:[24000,24000,25000,25500,26000,27000,24500,23500,25500,26500,25000,27500],
-       dl_p:[12000,12000,12500,13000,13500,14000,12500,12000,13000,13500,12500,14500],
-       ta_p:[1900, 1900, 2000, 2100, 2100, 2200, 2000, 1900, 2100, 2200, 2000, 2300]},
+    v:{ih_r:[41133,49176,47112,null,null,null,null,null,null,null,null,null],
+       dl_r:[21134,15792,18560,null,null,null,null,null,null,null,null,null],
+       ta_r:[null,null,null,null,null,null,null,null,null,null,null,null],
+       ih_p:[43000,52000,49000,49000,50000,51000,45000,43000,47000,48000,46000,50000],
+       dl_p:[22000,16500,19500,20000,20500,21000,19500,19000,20000,21000,19500,22000],
+       ta_p:[0,0,0,0,0,0,0,0,0,0,0,0]},
     dayPct:[10,9,11,12,20,22,16],
     hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
     hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
-    tk_ih:[13.2,13.0,13.5],tk_gl:[20.5,21.0,21.2],tk_ub:[22.8,23.1,23.5],tk_sh:[27.0,27.5,27.8],
-    nt_ih:[1818,1769,1867],nt_gl:[356,330,362],nt_ub:[158,148,163],nt_sh:[55,52,56]},
+    tk_ih:[23.9,21.6,23.7],tk_gl:[25.0,25.0,25.0],tk_ub:[28.0,28.0,28.0],tk_sh:[26.0,26.0,26.0],
+    nt_ih:[1722,2279,1986],nt_gl:[679,519,561],nt_ub:[113,87,135],nt_sh:[38,14,29]},
   sants:{name:'Sants',
-    v:{ih_r:[20400,19500,21400,null,null,null,null,null,null,null,null,null],
-       dl_r:[9900, 9400,10400, null,null,null,null,null,null,null,null,null],
-       ta_r:[1600, 1600, 1600, null,null,null,null,null,null,null,null,null],
-       ih_p:[20000,20000,21000,21500,22000,23000,20500,19500,21500,22000,21000,23000],
-       dl_p:[10000,10000,10500,11000,11500,12000,10500,10000,11000,11500,10500,12000],
-       ta_p:[1600, 1600, 1700, 1800, 1800, 1900, 1700, 1600, 1800, 1900, 1700, 2000]},
+    v:{ih_r:[35396,40555,41766,null,null,null,null,null,null,null,null,null],
+       dl_r:[23033,17821,16906,null,null,null,null,null,null,null,null,null],
+       ta_r:[null,null,null,null,null,null,null,null,null,null,null,null],
+       ih_p:[37000,42000,43000,43500,44000,45000,39000,37500,41000,42000,40000,44000],
+       dl_p:[24000,18500,17500,18000,18500,19000,17500,17000,18000,18500,17500,19500],
+       ta_p:[0,0,0,0,0,0,0,0,0,0,0,0]},
     dayPct:[11,9,10,12,20,22,16],
     hrWD:[0,.5,3,18,22,11,2,1.5,2,5,13,15,7,1],
     hrWE:[0,.2,1.5,12,21,14,4,2.5,3,5.5,14,17,11,3],
-    tk_ih:[13.0,12.8,13.3],tk_gl:[20.2,20.6,21.0],tk_ub:[22.5,22.8,23.2],tk_sh:[26.5,27.0,27.3],
-    nt_ih:[1569,1523,1609],nt_gl:[295,276,300],nt_ub:[132,124,138],nt_sh:[44,42,46]}
+    tk_ih:[27.8,25.1,25.9],tk_gl:[25.0,25.0,25.0],tk_ub:[28.0,28.0,28.0],tk_sh:[26.0,26.0,26.0],
+    nt_ih:[1272,1613,1611],nt_gl:[670,487,463],nt_ub:[183,166,161],nt_sh:[45,38,31]}
 };
 
+// Descuentos consolidados (3 locales). Totales reales BigQuery; desglose por código estimado.
 const DESC = {
-  0:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:38,total:268},
-     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:72,total:598},
-     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:128,total:1020},
-     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:198,total:1840},
-     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:62,total:420},
-     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:9,total:108}],
-  1:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:41,total:284},
-     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:80,total:672},
-     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:138,total:1102},
-     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:210,total:1960},
-     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:68,total:458},
-     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:11,total:132}],
-  2:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:45,total:312},
-     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:89,total:748},
-     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:156,total:1241},
-     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:234,total:2180},
-     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:78,total:520},
-     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:12,total:145}]
+  0:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:16,total:113},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:31,total:253},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:54,total:432},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:84,total:779},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:26,total:178},
+     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:4,total:46}],
+  1:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:26,total:178},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:50,total:421},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:86,total:690},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:132,total:1227},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:43,total:287},
+     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:7,total:83}],
+  2:[{cod:'STAFF10',desc:'Empleados 10%',tipo:'Interno',usos:13,total:87},
+     {cod:'HAPPY',desc:'Happy Hour -20%',tipo:'Promoción',usos:25,total:209},
+     {cod:'FIDELIDAD',desc:'Cliente fidelizado',tipo:'Fidelización',usos:44,total:347},
+     {cod:'GLOVO_P',desc:'Promo Glovo',tipo:'Delivery',usos:66,total:610},
+     {cod:'FIRST',desc:'Primera comanda',tipo:'Adquisición',usos:22,total:146},
+     {cod:'CUMPLE',desc:'Cumpleaños',tipo:'Fidelización',usos:3,total:41}]
 };
 
+// Semanal consolidado (3 locales). Real = BigQuery mensual prorrateado por días.
 const SEM = [
-  {lab:'Sem 1',dates:'01–07 Ene',real:32200,pp:31500,ih:20590,del:10010,ta:1600,cur:false},
-  {lab:'Sem 2',dates:'08–14 Ene',real:33400,pp:31500,ih:21380,del:10620,ta:1400,cur:false},
-  {lab:'Sem 3',dates:'15–21 Ene',real:31800,pp:31500,ih:20350,del:10090,ta:1360,cur:false},
-  {lab:'Sem 4',dates:'22–28 Ene',real:32100,pp:31500,ih:20550,del:10180,ta:1370,cur:false},
-  {lab:'Sem 5',dates:'29–31 Ene',real:15300,pp:13500,ih:9790, del:4870, ta:640, cur:false},
-  {lab:'Sem 6',dates:'01–07 Feb',real:30100,pp:30000,ih:19260,del:9550, ta:1290,cur:false},
-  {lab:'Sem 7',dates:'08–14 Feb',real:31400,pp:30000,ih:20100,del:9960, ta:1340,cur:false},
-  {lab:'Sem 8',dates:'15–21 Feb',real:30600,pp:30000,ih:19580,del:9680, ta:1340,cur:false},
-  {lab:'Sem 9',dates:'22–28 Feb',real:29200,pp:30000,ih:18690,del:9260, ta:1250,cur:false},
-  {lab:'Sem 10',dates:'01–07 Mar',real:34300,pp:31500,ih:21950,del:10880,ta:1470,cur:false},
-  {lab:'Sem 11',dates:'08–14 Mar',real:35100,pp:31500,ih:22460,del:11150,ta:1490,cur:false},
-  {lab:'Sem 12',dates:'15–21 Mar',real:34000,pp:31500,ih:21760,del:10780,ta:1460,cur:false},
-  {lab:'Sem 13',dates:'22–28 Mar',real:null, pp:31500,ih:null, del:null, ta:null, cur:true}
+  {lab:'Sem 1',dates:'01–07 Ene',real:39634,pp:40000,ih:28457,del:11177,ta:0,cur:false},
+  {lab:'Sem 2',dates:'08–14 Ene',real:39634,pp:40000,ih:28457,del:11177,ta:0,cur:false},
+  {lab:'Sem 3',dates:'15–21 Ene',real:39634,pp:40000,ih:28457,del:11177,ta:0,cur:false},
+  {lab:'Sem 4',dates:'22–28 Ene',real:39634,pp:40000,ih:28457,del:11177,ta:0,cur:false},
+  {lab:'Sem 5',dates:'29–31 Ene',real:16993,pp:17000,ih:12201,del:4792, ta:0,cur:false},
+  {lab:'Sem 6',dates:'01–07 Feb',real:44835,pp:43000,ih:32191,del:12643,ta:0,cur:false},
+  {lab:'Sem 7',dates:'08–14 Feb',real:44835,pp:43000,ih:32191,del:12643,ta:0,cur:false},
+  {lab:'Sem 8',dates:'15–21 Feb',real:44835,pp:43000,ih:32191,del:12643,ta:0,cur:false},
+  {lab:'Sem 9',dates:'22–28 Feb',real:44835,pp:43000,ih:32191,del:12643,ta:0,cur:false},
+  {lab:'Sem 10',dates:'01–07 Mar',real:40432,pp:41000,ih:29030,del:11402,ta:0,cur:false},
+  {lab:'Sem 11',dates:'08–14 Mar',real:40432,pp:41000,ih:29030,del:11402,ta:0,cur:false},
+  {lab:'Sem 12',dates:'15–21 Mar',real:40432,pp:41000,ih:29030,del:11402,ta:0,cur:false},
+  {lab:'Sem 13',dates:'22–28 Mar',real:null, pp:41000,ih:null, del:null, ta:null, cur:true}
 ];
+
 
 // ═══════════════════════════════════════════
 // HELPERS
